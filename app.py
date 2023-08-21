@@ -28,7 +28,7 @@ json_file_path = os.path.join(
 )
 
 # Get the path to the directory of the script
-chapter_content_json_path = os.path.join(
+full_chapter_content_json_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
     'royalroad_scraper', 'royalroad_scraper', 'chapter_spiders', 'chapter_content.json'
 )
@@ -52,8 +52,6 @@ for item in data:
     
 @app.route('/')
 def index():
-    # Clear the output.json and chapter_content.json files
-    clear_json_files()
 
     # Run the spiders
     run_spiders()
@@ -70,15 +68,15 @@ def read_chapter(story_id):
 
         target_story_id = str(story_id)
         chapter_content = "test"  # Default value in case no matching item is found
+        next_chapter = "test"
 
         for item in chapter_data:
             if item["story_id"] == target_story_id:
                 chapter_content = item["chapter_content"]
+                next_chapter = item["next_chapter"]
                 break
 
-        print(chapter_content)
-
-        return render_template('readChapter.html', chapter_content=chapter_content, story_id=story_id)
+        return render_template('readChapter.html', chapter_content=chapter_content, story_id=story_id, next_chapter=next_chapter)
 
     
     except Exception as e:
@@ -88,13 +86,6 @@ def read_chapter(story_id):
 
     except FileNotFoundError:
         return "Chapter content JSON file not found."
-
-
-def clear_json_files():
-    if os.path.exists(output_json_path):
-        os.remove(output_json_path)
-    if os.path.exists(chapter_content_json_path):
-        os.remove(chapter_content_json_path)
 
 
 def run_spiders():

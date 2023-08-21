@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Royal Road Stories</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home_style.css') }}">
 
 </head>
 <body>
@@ -13,6 +13,7 @@
             <button class="sort-btn" data-sort="view_count">Sort by View Count</button>
             <button class="sort-btn" data-sort="pages">Sort by Pages</button>
             <button class="sort-btn" data-sort="title">Sort by Title</button>
+            <button class="sort-btn" data-sort="random">Sort by Random</button>
         </li>
     </ul>
     <ul id="story-list">
@@ -22,11 +23,11 @@
                 <img src="{{ story.image_url }}" alt="{{ story.title }}" />
             </div>
             <div class="title">Title: {{ story.title }}</div>
-            <div class="id">ID: {{ story.id }}</div>
+            <div class="id">ID: {{ story.story_id }}</div>
             <div class="follower_count">Follower Count: {{ story.follower_count }}</div>
             <div class="view_count">View Count: {{ story.view_count }}</div>
             <div class="pages">Pages: {{ story.pages }}</div>
-            <div class="first_chap"><a href="https://www.royalroad.com{{ story.first_chapter }}">Read First Chapter</a></div>
+            <div class="first_chap"><a href="/story/{{ story.story_id }}">Read First Chapter</a></div>
         </li>
         {% endfor %}
     </ul>

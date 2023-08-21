@@ -2,11 +2,20 @@
 <html>
 <head>
     <title>Chapter Content</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chapter_style.css') }}">
 </head>
 <body>
-    <h1>{{ chapter_title }}</h1>
+    <h1>{{ story_id }}</h1>
+    <div>
+        <a href="{{ url_for('index') }}" class="return-button">Return to Index</a>
+    </div>
+    
     <div class="chapter-content">
         {{ chapter_content | safe }}
+    </div>
+
+    <div>
+        <a href="https://www.royalroad.com/fiction/{{ story_id }}">Continue Reading?</a>
     </div>
 </body>
 </html>

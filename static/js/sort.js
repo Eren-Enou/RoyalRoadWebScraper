@@ -5,6 +5,11 @@ $(document).ready(function () {
     $(".sort-btn").on("click", function () {
         const newSortBy = $(this).data("sort");
 
+        if (newSortBy === "random") {
+            sortRandomly();
+            return;
+        }
+
         if (sortBy === newSortBy) {
             sortDescending = !sortDescending;
         } else {
@@ -14,6 +19,17 @@ $(document).ready(function () {
 
         sortStories(sortBy, sortDescending);
     });
+
+    function sortRandomly() {
+        const storyList = $("#story-list");
+        const storyItems = storyList.find(".story-item");
+
+        storyItems.sort(function () {
+            return 0.5 - Math.random();
+        });
+
+        storyList.empty().append(storyItems);
+    }
 
     function sortStories(sortBy, descending) {
         const storyList = $("#story-list");

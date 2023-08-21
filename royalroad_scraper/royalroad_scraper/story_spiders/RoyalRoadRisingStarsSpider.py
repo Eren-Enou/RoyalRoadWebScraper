@@ -1,6 +1,20 @@
 #First attempt at Spider
 
 import scrapy
+from scrapy.crawler import CrawlerProcess
+from story_spiders.spiders import RoyalRoadRisingStarsSpider
+
+# Clear output.json before running
+open("output.json", "w").close()
+
+# Create a CrawlerProcess
+process = CrawlerProcess()
+
+# Add the spider to the process
+process.crawl(RoyalRoadRisingStarsSpider)
+
+# Start the crawling process
+process.start()
 
 class RoyalRoadRisingStarsSpider(scrapy.Spider):
     name = "royalroad"

@@ -2,7 +2,6 @@
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
-from story_spiders.spiders import RoyalRoadRisingStarsSpider
 
 # Clear output.json before running
 open("output.json", "w").close()

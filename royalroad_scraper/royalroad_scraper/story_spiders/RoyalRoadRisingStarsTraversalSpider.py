@@ -1,14 +1,22 @@
 import scrapy
+
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-
-
-
 
 class RoyalRoadRisingStarsTraversalSpider(scrapy.Spider):
     name = "royalroadtraversal"
     start_urls = ['https://www.royalroad.com/fictions/rising-stars']
+    
+    def __init__(self, *args, **kwargs):
+        super(RoyalRoadRisingStarsTraversalSpider, self).__init__(*args, **kwargs)
 
+        # Clear and create a new output.json before running
+        self.output_file_path = "output.json"
+        if os.path.exists(self.output_file_path):
+            os.remove(self.output_file_path)
+        with open(self.output_file_path, 'w') as output_file:
+            output_file.write('[]')  # Write an empty JSON array
+        
     def parse(self, response):
     # Extract the story items
         story_items = response.css('.fiction-list .fiction-list-item')
@@ -55,7 +63,7 @@ class RoyalRoadRisingStarsTraversalSpider(scrapy.Spider):
         ratings = statistics_numbers[4]
         pages = statistics_numbers[5]
 
-        yield {
+        scraped_data = {
             'title': title,
             'view_count': view_count,
             'average_views': average_views,
@@ -67,7 +75,12 @@ class RoyalRoadRisingStarsTraversalSpider(scrapy.Spider):
             'img_url': img_url,
             'story_id': story_id
         }
+        
+        # Append the data to the output.json file
+        with open(self.output_file_path, 'r+') as output_file:
+            data = json.load(output_file)
+            data.append(scraped_data)
+            output_file.seek(0)
+            json.dump(data, output_file, indent=4)
+            output_file.truncate()
 
-
-# Clear output.json before running
-open("output.json", "w").close()

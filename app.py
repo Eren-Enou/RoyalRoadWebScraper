@@ -13,6 +13,10 @@ from royalroad_scraper.royalroad_scraper.chapter_spiders.ChapterContentSpider im
 
 app = Flask(__name__)
 
+# Set the Twisted reactor to run in the main thread
+os.environ['TWISTED_REACTOR'] = 'twisted.internet.selectreactor.SelectReactor'
+
+
 # Define the paths to your JSON files
 output_json_path = "output.json"
 chapter_content_json_path = "chapter_content.json"
@@ -54,7 +58,7 @@ def index():
     # Run the spiders
     run_spiders()
 
-    return render_template('index.html')
+    return render_template('index.html', stories=stories)
 
 
 @app.route('/story/<int:story_id>')
@@ -94,11 +98,9 @@ def clear_json_files():
 
 
 def run_spiders():
-    settings = get_project_settings()
-    process = CrawlerProcess(settings)
-    process.crawl(RoyalRoadRisingStarsTraversalSpider)
-    process.crawl(ChapterContentSpider)
-    process.start()
+    subprocess.run(["python", "run_royal_road_spider.py"])
+    subprocess.run(["python", "run_chapter_content_spider.py"])
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=3001)

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Royal Road Stories</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <h1>Royal Road Stories</h1>
+    <ul>
+        <li>
+            <button class="sort-btn" data-sort="follower_count">Sort by Follower Count</button>
+            <button class="sort-btn" data-sort="view_count">Sort by View Count</button>
+            <button class="sort-btn" data-sort="pages">Sort by Pages</button>
+            <button class="sort-btn" data-sort="title">Sort by Title</button>
+        </li>
+    </ul>
+    <ul id="story-list">
+        {% for story in stories %}
+        <li class="story-item">
+            <div class="img-container">
+                <img src="{{ story.image_url }}" alt="{{ story.title }}" />
+            </div>
+            <div class="title">Title: {{ story.title }}</div>
+            <div class="follower_count">Follower Count: {{ story.follower_count }}</div>
+            <div class="view_count">View Count: {{ story.view_count }}</div>
+            <div class="pages">Pages: {{ story.pages }}</div>
+            <div class="first_chap"><a href="https://www.royalroad.com{{ story.first_chapter }}">Read First Chapter</a></div>
+        </li>
+        {% endfor %}
+    </ul>
+    
+    
+    
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/sort.js') }}"></script>
+</body>
+</html>

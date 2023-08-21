@@ -32,5 +32,14 @@ for item in data:
 def index():
     return render_template('index.html', stories=stories)
 
+@app.route('/chapter/<int:chapter_id>')
+def read_chapter(chapter_id):
+    # Load chapter content from JSON file
+    with open('chapter_content.json', 'r') as json_file:
+        chapter_data = json.load(json_file)[chapter_id]
+
+    return render_template('readChapter.html', **chapter_data)
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=3001)

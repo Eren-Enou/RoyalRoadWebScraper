@@ -1,3 +1,5 @@
+#First attempt at Spider
+
 import scrapy
 
 class RoyalRoadRisingStarsSpider(scrapy.Spider):

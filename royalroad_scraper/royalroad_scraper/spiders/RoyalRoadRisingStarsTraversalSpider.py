@@ -1,7 +1,7 @@
 import scrapy
 
-class RoyalRoadRisingStarsSpider(scrapy.Spider):
-    name = "royalroad"
+class RoyalRoadRisingStarsTraversalSpider(scrapy.Spider):
+    name = "royalroadtraversal"
     start_urls = ['https://www.royalroad.com/fictions/rising-stars']
 
     def parse(self, response):
